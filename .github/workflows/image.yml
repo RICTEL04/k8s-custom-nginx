@@ -1,8 +1,8 @@
 name: Build and Push Docker Image
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/k8s-custom-nginx
+  registry: ghcr.io
+  image_name: ghcr.io/${{ github.repository_owner }}/k8s-custom-nginx
 
 permissions:
   contents: read
@@ -10,9 +10,9 @@ permissions:
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
   pull_request:
-    branches: ["main"]
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -28,7 +28,6 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -37,7 +36,7 @@ jobs:
         with:
           context: .
           push: true
-          platforms: linux/amd64,linux/arm64
-          tags: ${{ env.IMAGE_NAME }}:latest
+          platforms: linux/amd64 , linux/arm64
+          tags: ${{ env.image_name }}:latest
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-to: type=gha , mode=max
